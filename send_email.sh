@@ -17,14 +17,15 @@ SMTP_PASSWORD="***************"
 sleep 5
 
 TXT_DIR="$HOME/cron/data"
-CURRENT_HOUR=$(date "+%Y-%m-%d_%H")
-TXT_FILE="$TXT_DIR/$CURRENT_HOUR.txt"
+# CURRENT_HOUR=$(date "+%Y-%m-%d_%H")
+PRV_HOUR=$(date --date="1 hour ago" "+%Y-%m-%d_%H")
+TXT_FILE="$TXT_DIR/$PRV_HOUR.txt"
 
 echo "$TXT_FILE"
 
 MESSAGE="$(cat $TXT_FILE)"
 
-echo "$MESSAGE" | s-nail -v -s "Data collected for hour: $CURRENT_HOUR" \
+echo "$MESSAGE" | s-nail -v -s "Data collected for hour: $PRV_HOUR" \
     -S smtp="$SMTP_SERVER:$SMTP_PORT" \
     -S smtp-auth=login \
     -S smtp-auth-user="$SMTP_USER" \
